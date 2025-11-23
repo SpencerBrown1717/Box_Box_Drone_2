@@ -1,273 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BoxBox Drone - Boom Box VTOL Wings</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BoxBox Drone — Boom Box VTOL Wings</title>
+  <meta name="description" content="BoxBox Drone sells Boom Box: 4 identical VTOL propeller wings with FPV cameras. Snap into a cardboard BoxBody. $50 per 4-pack." />
+
   <style>
     :root{
-      /* Cardboard / workshop theme */
-      --bg: #1a1108;
-      --bg-soft: #24170c;
-      --paper: #b98955;      /* cardboard */
-      --paper-2: #a47443;    /* darker cardboard */
-      --paper-3: #d7a772;    /* highlight */
-      --ink: #fff7ea;
-      --muted: #ead9c3;
+      /* Brown / cardboard / tactical minimal */
+      --bg:#0f0a06;
+      --bg2:#140d08;
+      --paper:#9a6a3e;
+      --paper2:#7b532f;
+      --ink:#f7efe6;
+      --muted:#cdb9a4;
+      --line:rgba(247,239,230,.10);
 
-      /* “Fighter jet” wing palette */
-      --steel: #3e4249;
-      --steel-2: #2d3137;
-      --steel-3: #61656d;
-      --blue: #7fb1ff;
-      --gold: #ffd36e;
+      /* Jet-gray wing */
+      --steel:#3c4046;
+      --steel2:#2a2d32;
+      --steel3:#5b6068;
 
-      --line: rgba(255,255,255,.10);
-      --ok: #52e0a7;
-      --radius: 18px;
-      --radius-lg: 26px;
-      --shadow: 0 22px 70px rgba(0,0,0,.55);
+      --accent:#d7a772;
+      --accent2:#8bb7ff;
+
+      --radius:16px;
+      --radius-lg:22px;
+      --shadow:0 18px 60px rgba(0,0,0,.6);
     }
 
     *{box-sizing:border-box}
     body{
       margin:0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      color: var(--ink);
-      line-height:1.55;
-
-      /* Cardboard / craft table background */
+      color:var(--ink);
       background:
-        radial-gradient(1200px 700px at 10% -10%, rgba(255,211,110,.12) 0%, transparent 60%),
-        radial-gradient(1000px 700px at 90% 0%, rgba(127,177,255,.10) 0%, transparent 60%),
-        repeating-linear-gradient(135deg, rgba(255,255,255,.03) 0 2px, transparent 2px 14px),
-        linear-gradient(180deg, #120b05 0%, var(--bg) 60%, #100905 100%);
+        radial-gradient(1100px 600px at 10% -10%, rgba(215,167,114,.12), transparent 60%),
+        radial-gradient(900px 520px at 90% 0%, rgba(139,183,255,.10), transparent 60%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+      line-height:1.55;
+      letter-spacing:.1px;
     }
     a{color:inherit; text-decoration:none}
-    .container{width:min(1120px, 92vw); margin:0 auto}
-    section{padding:56px 0}
+    .container{width:min(1080px, 92vw); margin:0 auto}
 
     /* Nav */
     nav{
       position:sticky; top:0; z-index:50;
-      backdrop-filter: blur(6px);
-      background: linear-gradient(to bottom, rgba(18,11,5,.95), rgba(18,11,5,.7), transparent);
+      background:rgba(15,10,6,.9);
       border-bottom:1px solid var(--line);
+      backdrop-filter: blur(6px);
     }
-    .nav-inner{
+    .nav-row{
       display:flex; align-items:center; justify-content:space-between;
       padding:14px 0;
     }
-    .logo{display:flex; gap:10px; align-items:center; font-weight:950}
-    .logo-mark{
-      width:38px; height:38px; border-radius:12px;
-      background:
-        radial-gradient(circle at 30% 25%, var(--paper-3), var(--paper) 55%, var(--paper-2) 100%);
-      box-shadow: inset 0 0 0 2px rgba(0,0,0,.18), 0 6px 18px rgba(0,0,0,.6);
-      display:grid; place-items:center; color:#2a1606; font-weight:1000;
+    .logo{
+      display:flex; align-items:center; gap:10px; font-weight:900;
       letter-spacing:.5px;
     }
-    .nav-links{display:flex; gap:18px; color:var(--muted); font-weight:900; font-size:14px}
+    .logo-mark{
+      width:34px;height:34px;border-radius:9px;
+      background: radial-gradient(circle at 35% 30%, #c99a64, var(--paper) 50%, var(--paper2) 100%);
+      display:grid; place-items:center; color:#22150c; font-size:12px; font-weight:1000;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.2);
+    }
+    .nav-links{
+      display:flex; gap:16px; color:var(--muted); font-weight:700; font-size:13px;
+    }
     .nav-links a:hover{color:var(--ink)}
 
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
-      padding:12px 16px; border-radius:999px; font-weight:950; font-size:14px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      color:var(--ink); transition:.2s ease;
-      box-shadow:0 6px 16px rgba(0,0,0,.35);
-      letter-spacing:.2px;
+      padding:10px 14px; border-radius:999px; font-weight:900; font-size:13px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      transition:.18s ease;
     }
-    .btn:hover{transform:translateY(-1px); background: rgba(255,255,255,.10)}
+    .btn:hover{transform:translateY(-1px); background:rgba(255,255,255,.07)}
     .btn.primary{
-      background: linear-gradient(135deg, var(--paper-3), var(--gold));
-      color:#211106; border:0;
+      border:0;
+      background: linear-gradient(135deg, var(--accent), #e7c08b);
+      color:#201309;
     }
-    .btn.small{padding:9px 12px; font-size:13px}
 
     /* Hero */
-    header{padding:70px 0 30px}
+    header{padding:54px 0 24px}
     .hero{
-      display:grid; gap:26px;
-      grid-template-columns:1.05fr .95fr; align-items:center;
+      display:grid; grid-template-columns:1fr 1fr; gap:22px; align-items:center;
     }
-    .badge{
-      display:inline-flex; gap:8px; align-items:center;
-      background: rgba(255,211,110,.12);
-      border:1px solid rgba(255,211,110,.45);
-      color:#fff1db; padding:6px 10px; border-radius:999px;
-      font-size:12px; font-weight:1000; letter-spacing:.6px; width:fit-content;
+    .kicker{
+      display:inline-flex; align-items:center; gap:8px;
+      font-size:11px; font-weight:1000; letter-spacing:.9px; text-transform:uppercase;
+      color:#f4ddbf;
+      background:rgba(215,167,114,.08);
+      border:1px solid rgba(215,167,114,.3);
+      padding:6px 9px; border-radius:999px;
     }
     h1{
-      font-size: clamp(32px, 4.2vw, 56px);
-      line-height:1.05; margin:10px 0 8px; font-weight:1000;
-      letter-spacing:.2px;
+      margin:10px 0 8px;
+      font-size: clamp(28px, 4vw, 46px);
+      line-height:1.1; font-weight:1000;
     }
-    .hero p{
+    .sub{
       color:var(--muted);
-      font-size: clamp(15px, 1.6vw, 18px);
-      margin:0 0 16px;
+      font-size: clamp(14px, 1.5vw, 17px);
+      margin:0 0 14px;
     }
-    .hero-cta{display:flex; flex-wrap:wrap; gap:10px; margin-top:8px}
-    .mini{
-      display:flex; gap:14px; margin-top:14px; color:var(--muted);
-      font-size:13px; font-weight:900; flex-wrap:wrap;
+    .hero-cta{display:flex; gap:8px; flex-wrap:wrap}
+    .price-pill{
+      display:inline-flex; align-items:center; gap:8px;
+      margin-top:10px; color:var(--muted); font-weight:800; font-size:13px;
     }
-    .mini span{display:flex; align-items:center; gap:6px}
-    .dot{width:8px;height:8px;border-radius:50%;background:var(--ok); box-shadow:0 0 10px var(--ok)}
+    .price-pill .dot{
+      width:8px; height:8px; border-radius:50%; background:#52e0a7;
+      box-shadow:0 0 10px rgba(82,224,167,.9);
+    }
 
-    /* Product panel */
-    .product{
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)),
-        radial-gradient(900px 300px at 50% -10%, rgba(255,211,110,.18), transparent 60%);
+    /* Product card */
+    .panel{
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
       border:1px solid var(--line);
       border-radius: var(--radius-lg);
-      padding:18px;
+      padding:14px;
       box-shadow: var(--shadow);
-      position:relative; overflow:hidden;
-      min-height:380px;
-      display:grid; gap:12px; align-content:start;
     }
-    .product-head{
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-    }
-    .chip{
-      font-size:12px; font-weight:1000; letter-spacing:.5px;
-      padding:6px 9px; border-radius:999px;
-      background: rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.18);
-      color:#fff3de;
-      width:fit-content;
+    .panel-head{
+      display:flex; align-items:center; justify-content:space-between;
+      margin-bottom:10px; font-size:12px; font-weight:900; color:var(--muted);
+      letter-spacing:.5px; text-transform:uppercase;
     }
 
-    /* Wing illustration */
-    .wing-figure{
-      width:100%; max-width:500px; margin:0 auto;
-      background:
-        radial-gradient(900px 300px at 50% 0%, rgba(127,177,255,.12), transparent 60%),
-        repeating-linear-gradient(135deg, rgba(255,255,255,.035) 0 1px, transparent 1px 12px);
-      border:1px solid var(--line);
-      border-radius:18px; padding:14px;
-    }
-    svg{width:100%; height:auto; display:block}
-
-    .legend{
-      display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:10px;
-      color:var(--muted); font-size:12.5px; font-weight:1000;
-    }
-    .legend .item{
-      background: rgba(0,0,0,.22);
-      border:1px solid var(--line); border-radius:12px; padding:8px;
-      display:flex; gap:8px; align-items:center;
-    }
-    .legend .dot2{
-      width:10px; height:10px; border-radius:3px; background:var(--blue);
-      box-shadow:0 0 10px rgba(127,177,255,.8);
-      flex:0 0 auto;
-    }
-
-    /* Sections */
-    .section-head{
-      display:flex; align-items:end; justify-content:space-between; gap:12px; margin-bottom:16px;
-    }
-    .section-head h2{margin:0; font-size:clamp(22px, 3vw, 30px); font-weight:1000}
-    .section-head p{margin:0; color:var(--muted); font-weight:900}
-
-    .grid-3{
-      display:grid; gap:14px;
-      grid-template-columns:repeat(3,1fr);
+    /* Features */
+    section{padding:34px 0}
+    .grid{
+      display:grid; grid-template-columns:repeat(3,1fr); gap:10px;
     }
     .card{
-      background: rgba(0,0,0,.25);
+      background:rgba(0,0,0,.25);
       border:1px solid var(--line);
       border-radius:var(--radius);
-      padding:16px;
-      box-shadow:0 10px 26px rgba(0,0,0,.35);
+      padding:12px;
+      min-height:110px;
     }
-    .card .icon{
-      width:40px;height:40px;border-radius:12px;display:grid;place-items:center;
-      background:rgba(255,255,255,.06);border:1px solid var(--line);font-weight:1000;margin-bottom:8px;
+    .card h3{
+      margin:0 0 6px; font-size:14.5px; font-weight:950;
     }
-    .card h3{margin:0 0 6px;font-size:18px}
-    .card p{margin:0;color:var(--muted);font-size:14.5px}
+    .card p{
+      margin:0; color:var(--muted); font-size:13.5px; font-weight:700;
+    }
 
-    /* Steps */
-    .steps{display:grid; gap:12px; grid-template-columns:repeat(4,1fr)}
-    .step{
-      background: rgba(0,0,0,.22);
-      border:1px dashed rgba(255,255,255,.16);
-      padding:14px; border-radius:16px; display:flex; flex-direction:column; gap:8px; min-height:150px;
-    }
-    .step .num{
-      width:32px;height:32px;border-radius:10px;display:grid;place-items:center;
-      background:rgba(255,211,110,.13);border:1px solid rgba(255,211,110,.5);
-      color:#fff3dc;font-weight:1000;
-    }
-    .step h4{margin:0;font-size:16px}
-    .step p{margin:0;color:var(--muted);font-size:14px}
-
-    /* Pricing */
+    /* Pricing strip */
     .pricing{
-      display:grid; gap:14px; grid-template-columns:1.2fr .8fr; align-items:stretch;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:14px; border-radius:18px;
+      background: linear-gradient(135deg, rgba(154,106,62,.18), rgba(215,167,114,.10));
+      border:1px solid rgba(247,239,230,.14);
     }
-    .price{
-      background: rgba(0,0,0,.28);
-      border:1px solid var(--line); border-radius:20px; padding:18px;
-      display:flex; flex-direction:column; gap:10px;
-      box-shadow:0 12px 30px rgba(0,0,0,.45);
-      position:relative;
+    .pricing .big{
+      font-size:26px; font-weight:1000; letter-spacing:.3px;
     }
-    .price .tag{
-      position:absolute; top:12px; right:12px; font-size:11px; font-weight:1000;
-      background:rgba(255,211,110,.15); border:1px solid rgba(255,211,110,.55);
-      color:#fff0d4; padding:4px 7px; border-radius:999px;
-    }
-    .money{font-size:40px;font-weight:1000;letter-spacing:.3px}
-    .money small{font-size:13px;color:var(--muted);font-weight:900}
-    .list{display:grid; gap:6px; color:var(--muted); font-size:14.5px}
-    .list .row{display:flex; gap:8px; align-items:flex-start}
-    .check{
-      width:18px;height:18px;border-radius:6px;background:rgba(82,224,167,.16);
-      border:1px solid rgba(82,224,167,.55);display:grid;place-items:center;color:#e5fff3;font-size:12px;font-weight:1000;
-      flex:0 0 auto; margin-top:2px;
+    .pricing .small{
+      color:var(--muted); font-weight:800; font-size:13px;
     }
 
-    /* Waitlist CTA */
-    .cta{
-      background:
-        linear-gradient(135deg, rgba(185,137,85,.36), rgba(215,167,114,.20)),
-        radial-gradient(800px 250px at 0% 0%, rgba(127,177,255,.12), transparent 60%);
-      border:1px solid rgba(255,255,255,.18);
-      border-radius:24px; padding:18px;
-      display:flex; align-items:center; justify-content:space-between; gap:14px;
-      box-shadow:var(--shadow); flex-wrap:wrap;
-    }
-    .cta h3{margin:0;font-size:22px}
-    .cta p{margin:4px 0 0;color:#fff3df;font-weight:900}
-    input{
-      padding:12px 14px; border-radius:999px; border:1px solid var(--line);
-      background:rgba(14,9,5,.9); color:var(--ink); min-width:220px; outline:none;
-    }
-
+    /* Footer */
     footer{
-      padding:28px 0 40px; color:var(--muted); font-size:13px;
-      display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
+      padding:26px 0 36px; color:var(--muted); font-size:12.5px;
       border-top:1px solid var(--line);
+      display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
     }
 
-    @media (max-width:980px){
+    @media (max-width:900px){
       .hero{grid-template-columns:1fr}
-      .grid-3{grid-template-columns:1fr 1fr}
-      .steps{grid-template-columns:1fr 1fr}
-      .pricing{grid-template-columns:1fr}
+      .grid{grid-template-columns:1fr 1fr}
     }
     @media (max-width:560px){
       .nav-links{display:none}
-      .grid-3{grid-template-columns:1fr}
-      .steps{grid-template-columns:1fr}
-      header{padding-top:42px}
+      .grid{grid-template-columns:1fr}
     }
   </style>
 </head>
@@ -275,28 +186,22 @@
 
   <!-- NAV -->
   <nav>
-    <div class="container nav-inner">
+    <div class="container nav-row">
       <div class="logo">
-        <div class="logo-mark">BX</div>
+        <div class="logo-mark">BXBX</div>
         <div>
-          <div style="font-size:16px;">BoxBox Drone</div>
-          <div style="font-size:11px; color:var(--muted); font-weight:900; margin-top:-2px;">
-            Makers of Boom Box
-          </div>
+          <div style="font-size:15px;">BoxBox Drone</div>
+          <div style="font-size:10px;color:var(--muted);font-weight:800;margin-top:-2px;">Boom Box VTOL Wings</div>
         </div>
       </div>
-
       <div class="nav-links">
-        <a href="#product">Boom Box Wings</a>
-        <a href="#how">Build & Fly</a>
-        <a href="#why">Why BoxBox</a>
-        <a href="#pricing">4-Pack</a>
-        <a href="#waitlist">Updates</a>
+        <a href="#product">Product</a>
+        <a href="#use">Use cases</a>
+        <a href="#pricing">Pricing</a>
       </div>
-
-      <div style="display:flex; gap:8px;">
-        <a class="btn small" href="#pricing">Buy 4-Pack</a>
-        <a class="btn primary" href="#waitlist">Get Updates</a>
+      <div style="display:flex;gap:8px;">
+        <a class="btn" href="#pricing">4-Pack</a>
+        <a class="btn primary" href="#pricing">Buy</a>
       </div>
     </div>
   </nav>
@@ -305,295 +210,190 @@
   <header class="container">
     <div class="hero">
       <div>
-        <div class="badge">CORE IDEA: THE WINGS</div>
-        <h1>
-          Your kid gets a gift.<br/>
-          You get a real FPV build.
-        </h1>
-        <p>
-          <strong>Boom Box</strong> is BoxBox Drone’s product:
-          <strong>four identical propeller VTOL wings, each with a small FPV camera</strong>.
-          They <strong>snap into our cardboard BoxBody™</strong> in seconds, giving you a stable
-          first drone right out of the package.
+        <div class="kicker">Core idea: the wings</div>
+        <h1>Boom Box.</h1>
+        <p class="sub">
+          Four identical VTOL propeller wings with FPV cameras.
+          Snap into a BoxBody in seconds. Mass-producible, field-repairable, and ready fast.
         </p>
-        <p>
-          It’s modular on purpose: add wings, swap wings, rebuild whenever you want.
-          The build is as fun as the flight — and simple enough that anyone can do it.
-        </p>
-
         <div class="hero-cta">
-          <a class="btn primary" href="#pricing">Get the Boom Box 4-Pack</a>
-          <a class="btn" href="#product">See the Wings</a>
+          <a class="btn primary" href="#pricing">Buy 4-Pack</a>
+          <a class="btn" href="#product">See the wing</a>
         </div>
-
-        <div class="mini">
-          <span><i class="dot"></i> 4 wings = best stability</span>
-          <span><i class="dot" style="background:var(--blue); box-shadow:0 0 10px var(--blue)"></i> Identical, interchangeable modules</span>
-          <span><i class="dot" style="background:var(--gold); box-shadow:0 0 10px var(--gold)"></i> Gift-ready BoxBody included</span>
-        </div>
+        <div class="price-pill"><span class="dot"></span> $50 USD per 4-pack</div>
       </div>
 
-      <!-- PRODUCT VISUAL -->
-      <div id="product" class="product">
-        <div class="product-head">
-          <div class="chip">Core Product</div>
-          <div style="color:var(--muted); font-size:12px; font-weight:900;">Boom Box VTOL Wings</div>
+      <!-- PRODUCT PANEL / CODE-DRAWN WING -->
+      <div id="product" class="panel">
+        <div class="panel-head">
+          <div>Core Product</div>
+          <div>Boom Box VTOL Wing</div>
         </div>
 
-        <div class="wing-figure" aria-label="Illustration of Boom Box wings">
-          <!-- Inline SVG illustration: 4 identical gray fighter-jet wings -->
-          <svg viewBox="0 0 720 360" role="img" aria-label="Four snap-in VTOL wings with FPV cameras">
-            <defs>
-              <linearGradient id="wingGrad" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="#61656d"/>
-                <stop offset="50%" stop-color="#3e4249"/>
-                <stop offset="100%" stop-color="#2d3137"/>
-              </linearGradient>
-              <radialGradient id="camGrad" cx="35%" cy="35%" r="70%">
-                <stop offset="0" stop-color="#cfe3ff"/>
-                <stop offset="55%" stop-color="#7fb1ff"/>
-                <stop offset="56%" stop-color="#121622"/>
-              </radialGradient>
+        <!-- Minimal tactical SVG depiction of the wing/prop module -->
+        <svg viewBox="0 0 760 420" width="100%" height="auto" role="img" aria-label="VTOL wing module">
+          <defs>
+            <linearGradient id="steelGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#5b6068"/>
+              <stop offset="55%" stop-color="#3c4046"/>
+              <stop offset="100%" stop-color="#2a2d32"/>
+            </linearGradient>
+            <linearGradient id="bladeGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#0b0c0f"/>
+              <stop offset="100%" stop-color="#1a1c20"/>
+            </linearGradient>
+            <radialGradient id="lensGrad" cx="35%" cy="35%" r="70%">
+              <stop offset="0" stop-color="#cfe3ff"/>
+              <stop offset="55%" stop-color="#8bb7ff"/>
+              <stop offset="56%" stop-color="#0d1119"/>
+            </radialGradient>
+            <filter id="softShadow" x="-30%" y="-30%" width="160%" height="160%">
+              <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000" flood-opacity=".55"/>
+            </filter>
+          </defs>
 
-              <!-- clip for snap image -->
-              <clipPath id="snapClip">
-                <rect x="206" y="21" width="32" height="28" rx="6" ry="6"></rect>
-              </clipPath>
-            </defs>
+          <!-- Wing blade -->
+          <g filter="url(#softShadow)" transform="translate(110,35) rotate(-14)">
+            <path d="M40,60
+                     Q165,0 360,18
+                     Q410,22 475,35
+                     Q490,38 500,50
+                     Q510,62 495,70
+                     Q430,102 360,118
+                     Q170,160 60,128
+                     Q20,116 18,92
+                     Q16,69 40,60 Z"
+                  fill="url(#bladeGrad)" stroke="rgba(255,255,255,.14)" stroke-width="2"/>
 
-            <!-- One wing symbol (reused 4x): camera, hinge, SNAP image -->
-            <g id="wing">
-              <rect x="0" y="0" rx="40" ry="40" width="250" height="70"
-                    fill="url(#wingGrad)" stroke="rgba(255,255,255,.14)"/>
+            <!-- Subtle edge highlight -->
+            <path d="M48,66 Q170,10 354,26" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="3" />
 
-              <!-- camera -->
-              <circle cx="40" cy="35" r="18" fill="url(#camGrad)" stroke="rgba(255,255,255,.25)"/>
+            <!-- Motor hub -->
+            <g transform="translate(420,56)">
+              <circle cx="0" cy="0" r="44" fill="#1a1c20" stroke="rgba(255,255,255,.2)" stroke-width="2"/>
+              <circle cx="0" cy="0" r="30" fill="url(#steelGrad)" stroke="rgba(255,255,255,.18)" stroke-width="2"/>
+              <circle cx="0" cy="0" r="12" fill="#111318" stroke="rgba(255,255,255,.22)" stroke-width="2"/>
+              <!-- bolts -->
+              <g fill="rgba(255,255,255,.3)">
+                <circle cx="-18" cy="-6" r="2.4"/>
+                <circle cx="18" cy="-6" r="2.4"/>
+                <circle cx="0" cy="18" r="2.4"/>
+              </g>
+            </g>
+          </g>
 
-              <!-- hinge block -->
-              <rect x="160" y="17" width="36" height="36" rx="8"
-                    fill="#1b1f26" stroke="rgba(255,255,255,.35)" stroke-dasharray="4 3"/>
+          <!-- Body module -->
+          <g filter="url(#softShadow)" transform="translate(290,160)">
+            <!-- main housing -->
+            <path d="M90,0
+                     h120
+                     q28,0 40,18
+                     q10,15 10,34
+                     v76
+                     q0,18 -10,30
+                     q-12,18 -40,18
+                     h-80
+                     l-44,52
+                     q-8,10 -18,8
+                     q-12,-2 -12,-16
+                     v-44
+                     h-6
+                     q-28,0 -40,-18
+                     q-10,-12 -10,-30
+                     v-78
+                     q0,-20 10,-34
+                     q12,-16 40,-16 z"
+                  fill="url(#steelGrad)" stroke="rgba(255,255,255,.2)" stroke-width="2" />
 
-              <!-- SNAP image replaces the tiny box -->
-              <image
-                href="VTOL-Drone-Rotor-Close-Up.png"
-                x="206" y="21" width="32" height="28"
-                preserveAspectRatio="xMidYMid slice"
-                clip-path="url(#snapClip)"
-              ></image>
+            <!-- hinge ring -->
+            <circle cx="92" cy="110" r="34" fill="#22252a" stroke="rgba(255,255,255,.22)" stroke-width="2"/>
+            <circle cx="92" cy="110" r="20" fill="#14161a" />
 
-              <!-- subtle outline so it matches UI -->
-              <rect x="206" y="21" width="32" height="28" rx="6"
-                    fill="transparent" stroke="rgba(255,255,255,.2)"/>
+            <!-- FPV lens -->
+            <g transform="translate(44,42)">
+              <circle cx="0" cy="0" r="20" fill="url(#lensGrad)" stroke="rgba(255,255,255,.3)" stroke-width="2"/>
+              <circle cx="0" cy="0" r="9" fill="#07101d"/>
             </g>
 
-            <!-- Place 4 identical wings -->
-            <g transform="translate(60,60)">
-              <use href="#wing"></use>
-              <text x="92" y="44" fill="#f2f5ff" font-size="14" font-weight="900" letter-spacing=".4">FPV CAMERA</text>
+            <!-- tiny vents -->
+            <g stroke="rgba(255,255,255,.18)" stroke-width="2">
+              <line x1="150" y1="40" x2="190" y2="40"/>
+              <line x1="146" y1="52" x2="194" y2="52"/>
             </g>
+          </g>
 
-            <g transform="translate(410,50) rotate(5)">
-              <use href="#wing"></use>
-              <text x="92" y="44" fill="#f2f5ff" font-size="14" font-weight="900" letter-spacing=".4">VTOL HINGE</text>
-            </g>
+          <!-- Landing feet -->
+          <g filter="url(#softShadow)" transform="translate(470,270) rotate(8)">
+            <path d="M0,0
+                     h120
+                     q18,0 18,18
+                     v26
+                     q0,18 -18,18
+                     h-34
+                     l-28,36
+                     q-8,10 -18,8
+                     q-10,-2 -10,-16
+                     v-28
+                     h-20
+                     l-22,30
+                     q-8,10 -18,8
+                     q-10,-2 -10,-16
+                     v-34
+                     q0,-18 18,-18 z"
+                  fill="url(#steelGrad)" stroke="rgba(255,255,255,.2)" stroke-width="2"/>
 
-            <g transform="translate(70,220) rotate(-4)">
-              <use href="#wing"></use>
-              <text x="92" y="44" fill="#f2f5ff" font-size="14" font-weight="900" letter-spacing=".4">SNAP-IN PEGS</text>
-            </g>
+            <!-- skid tips -->
+            <path d="M40,80 l-18,28" stroke="rgba(255,255,255,.2)" stroke-width="5" stroke-linecap="round"/>
+            <path d="M88,76 l-18,28" stroke="rgba(255,255,255,.2)" stroke-width="5" stroke-linecap="round"/>
+          </g>
 
-            <g transform="translate(420,230) rotate(3)">
-              <use href="#wing"></use>
-              <text x="92" y="44" fill="#f2f5ff" font-size="14" font-weight="900" letter-spacing=".4">MODULAR SWAP</text>
-            </g>
-
-            <text x="360" y="180" text-anchor="middle" fill="rgba(255,255,255,.45)" font-size="12" font-weight="900" letter-spacing="1.1">
-              4 IDENTICAL WINGS • BEST STABILITY • BEST FLIGHT
-            </text>
-          </svg>
-
-          <div class="legend">
-            <div class="item"><div class="dot2"></div><div>Small FPV camera in each wing</div></div>
-            <div class="item"><div class="dot2" style="background:var(--gold); box-shadow:0 0 10px rgba(255,211,110,.8)"></div><div>VTOL hinge for takeoff + lock</div></div>
-            <div class="item"><div class="dot2" style="background:#bde6c9; box-shadow:0 0 10px rgba(189,230,201,.8)"></div><div>Snap pegs slide into BoxBody™</div></div>
-          </div>
-        </div>
-
-        <p style="color:var(--muted); font-size:14.5px; margin:4px 0 0;">
-          The wings are everything. Lightweight, durable, and endlessly remixable.
-          Add, remove, or swap modules whenever you want.
-        </p>
+          <!-- Module label -->
+          <text x="40" y="395" fill="rgba(247,239,230,.7)" font-size="12" font-weight="900" letter-spacing="1.2">
+            IDENTICAL WING MODULE • SNAP-IN PEGS • VTOL HINGE • FPV CAMERA
+          </text>
+        </svg>
       </div>
     </div>
   </header>
 
-  <!-- WHY -->
-  <section id="why" class="container">
-    <div class="section-head">
-      <div>
-        <h2>Why dads pick BoxBox Drone</h2>
-        <p>Because it’s a real build, not a fragile toy.</p>
-      </div>
-    </div>
-
-    <div class="grid-3">
+  <!-- FEATURES / USE CASES -->
+  <section id="use" class="container">
+    <div class="grid">
       <div class="card">
-        <div class="icon">🧱</div>
-        <h3>Modular from day one</h3>
-        <p>
-          Every wing is identical and interchangeable.
-          If a part ever breaks, you swap a wing — not the whole drone.
-        </p>
+        <h3>FPV racing</h3>
+        <p>Stable four-wing lift, fast swaps, consistent modules.</p>
       </div>
       <div class="card">
-        <div class="icon">🛩️</div>
-        <h3>Jet-style wings kids love</h3>
-        <p>
-          Cool gray “fighter jet” look, tough finish, and real prop-lift feel.
-          It’s the kind of thing they’ll show off.
-        </p>
+        <h3>Rapid delivery</h3>
+        <p>Send small packages in minutes, indoors or out.</p>
       </div>
       <div class="card">
-        <div class="icon">🎥</div>
-        <h3>FPV cameras built in</h3>
-        <p>
-          Each wing has its own tiny camera.
-          Different angles, different games, same simple modules.
-        </p>
-      </div>
-      <div class="card">
-        <div class="icon">🚀</div>
-        <h3>VTOL that’s easy to learn</h3>
-        <p>
-          Tilt down to lift off vertically, lock forward to cruise.
-          Stable first flights, room to grow.
-        </p>
-      </div>
-      <div class="card">
-        <div class="icon">🎁</div>
-        <h3>Gift-ready BoxBody™</h3>
-        <p>
-          The shipping box is the chassis.
-          Open it, snap in wings, and you’re flying in minutes.
-        </p>
-      </div>
-      <div class="card">
-        <div class="icon">💌</div>
-        <h3>Add a surprise inside</h3>
-        <p>
-          Put a note, small toy, or holiday message in the box before wrapping.
-          They build it right after unwrapping under the tree.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- HOW IT WORKS -->
-  <section id="how" class="container">
-    <div class="section-head">
-      <div>
-        <h2>From box to flight in seconds</h2>
-        <p>Everything you need ships together.</p>
-      </div>
-    </div>
-
-    <div class="steps">
-      <div class="step">
-        <div class="num">1</div>
-        <h4>Open the BoxBody™</h4>
-        <p>Your wings arrive inside the box that becomes the drone.</p>
-      </div>
-      <div class="step">
-        <div class="num">2</div>
-        <h4>Snap in 4 wings</h4>
-        <p>Quick-click pegs lock in for best stability.</p>
-      </div>
-      <div class="step">
-        <div class="num">3</div>
-        <h4>VTOL takeoff</h4>
-        <p>Tilt down, lift off vertically, then lock forward.</p>
-      </div>
-      <div class="step">
-        <div class="num">4</div>
-        <h4>Fly FPV</h4>
-        <p>Live view on phone or optional goggles.</p>
+        <h3>Message drops</h3>
+        <p>Load the box with notes or surprises. Fly it over.</p>
       </div>
     </div>
   </section>
 
   <!-- PRICING -->
   <section id="pricing" class="container">
-    <div class="section-head">
-      <div>
-        <h2>Boom Box 4-Pack</h2>
-        <p>Four identical propeller VTOL wings.</p>
-      </div>
-    </div>
-
     <div class="pricing">
-      <div class="price">
-        <div class="tag">Core Product</div>
-        <h3 style="margin:0;">4 Boom Box VTOL Wings</h3>
-        <div class="money">$50 <small>USD per 4-pack</small></div>
-
-        <div class="list">
-          <div class="row"><div class="check">✓</div><div>4 identical modular wings</div></div>
-          <div class="row"><div class="check">✓</div><div>Small FPV camera in each</div></div>
-          <div class="row"><div class="check">✓</div><div>Snap-fit pegs for BoxBody™</div></div>
-          <div class="row"><div class="check">✓</div><div>VTOL hinge + forward-flight lock</div></div>
-          <div class="row"><div class="check">✓</div><div>All-ages flight modes</div></div>
-        </div>
-
-        <div style="margin-top:auto;">
-          <a class="btn primary" href="#waitlist" style="width:100%;">Reserve the 4-Pack</a>
-        </div>
-      </div>
-
-      <div class="price">
-        <h3 style="margin:0;">Optional Add-Ons</h3>
-        <div class="list">
-          <div class="row"><div class="check">✓</div><div>Extra BoxBodies™ for new builds</div></div>
-          <div class="row"><div class="check">✓</div><div>Spare wings + batteries</div></div>
-          <div class="row"><div class="check">✓</div><div>FPV goggles</div></div>
-          <div class="row"><div class="check">✓</div><div>Sticker / coloring kits</div></div>
-        </div>
-        <p style="color:var(--muted); font-size:14px; margin:0;">
-          Start with wings. Expand as they level up.
-        </p>
-        <div style="margin-top:auto;">
-          <a class="btn" href="#waitlist" style="width:100%;">Get Launch Updates</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- WAITLIST CTA -->
-  <section id="waitlist" class="container">
-    <div class="cta">
       <div>
-        <h3>First drop is coming</h3>
-        <p>Join for launch alerts, early discounts, and new wing releases.</p>
+        <div style="font-weight:1000; font-size:16px;">Boom Box 4-Pack</div>
+        <div class="small">4 identical VTOL propeller wings • FPV camera in each • snap-fit</div>
       </div>
-      <form onsubmit="event.preventDefault(); alert('Thanks! You are on the BoxBox Drone updates list.');"
-            style="display:flex; gap:8px; flex-wrap:wrap;">
-        <input required type="email" placeholder="you@email.com" />
-        <button class="btn primary" type="submit">Join Updates</button>
-      </form>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div class="big">$50</div>
+        <a class="btn primary" href="#" onclick="alert('Checkout placeholder');return false;">Buy</a>
+      </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer class="container">
     <div>
-      <div style="font-weight:1000; color:var(--ink)">BoxBox Drone</div>
-      <div>Boom Box modular wings for real FPV play.</div>
+      <div style="font-weight:1000;color:var(--ink)">BoxBox Drone</div>
+      <div>Modular VTOL wings. Built for speed and scale.</div>
     </div>
-    <div style="display:flex; gap:14px;">
-      <a href="#product">Boom Box Wings</a>
-      <a href="#how">Build & Fly</a>
-      <a href="#pricing">4-Pack</a>
-    </div>
-    <div>© <span id="year"></span> BoxBox Drone Co. All rights reserved.</div>
+    <div>© <span id="year"></span> BoxBox Drone Co.</div>
   </footer>
 
   <script>
