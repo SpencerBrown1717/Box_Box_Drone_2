@@ -22,7 +22,6 @@
       --steel-2: #2d3137;
       --steel-3: #61656d;
       --blue: #7fb1ff;
-      --blue-deep: #3e6bff;
       --gold: #ffd36e;
 
       --line: rgba(255,255,255,.10);
@@ -357,18 +356,36 @@
                 <stop offset="55%" stop-color="#7fb1ff"/>
                 <stop offset="56%" stop-color="#121622"/>
               </radialGradient>
+
+              <!-- clip for snap image -->
+              <clipPath id="snapClip">
+                <rect x="206" y="21" width="32" height="28" rx="6" ry="6"></rect>
+              </clipPath>
             </defs>
 
-            <!-- One wing symbol (reused 4x): camera, hinge, snap peg -->
+            <!-- One wing symbol (reused 4x): camera, hinge, SNAP image -->
             <g id="wing">
-              <rect x="0" y="0" rx="40" ry="40" width="250" height="70" fill="url(#wingGrad)" stroke="rgba(255,255,255,.14)"/>
+              <rect x="0" y="0" rx="40" ry="40" width="250" height="70"
+                    fill="url(#wingGrad)" stroke="rgba(255,255,255,.14)"/>
+
               <!-- camera -->
               <circle cx="40" cy="35" r="18" fill="url(#camGrad)" stroke="rgba(255,255,255,.25)"/>
+
               <!-- hinge block -->
-              <rect x="160" y="17" width="36" height="36" rx="8" fill="#1b1f26" stroke="rgba(255,255,255,.35)" stroke-dasharray="4 3"/>
-              <!-- snap peg -->
-              <rect x="206" y="21" width="32" height="28" rx="6" fill="#0f1319" stroke="rgba(255,255,255,.2)"/>
-              <text x="205" y="40" fill="#e9edf7" font-size="10" font-weight="900" text-anchor="middle">SNAP</text>
+              <rect x="160" y="17" width="36" height="36" rx="8"
+                    fill="#1b1f26" stroke="rgba(255,255,255,.35)" stroke-dasharray="4 3"/>
+
+              <!-- SNAP image replaces the tiny box -->
+              <image
+                href="VTOL-Drone-Rotor-Close-Up.png"
+                x="206" y="21" width="32" height="28"
+                preserveAspectRatio="xMidYMid slice"
+                clip-path="url(#snapClip)"
+              ></image>
+
+              <!-- subtle outline so it matches UI -->
+              <rect x="206" y="21" width="32" height="28" rx="6"
+                    fill="transparent" stroke="rgba(255,255,255,.2)"/>
             </g>
 
             <!-- Place 4 identical wings -->
